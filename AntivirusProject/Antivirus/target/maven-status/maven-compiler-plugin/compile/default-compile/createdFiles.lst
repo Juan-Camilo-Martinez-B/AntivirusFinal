@@ -1,0 +1,15 @@
+com\antivirus\Antivirus\controller\MonitorController.class
+com\antivirus\Antivirus\service\QuickScanStrategy.class
+com\antivirus\Antivirus\controller\ThreatController.class
+com\antivirus\Antivirus\service\TargetedScanStrategy.class
+com\antivirus\Antivirus\config\ScanStrategyFactory.class
+com\antivirus\Antivirus\AntivirusApplication.class
+com\antivirus\Antivirus\service\ScanFactory.class
+com\antivirus\Antivirus\service\DeepScanStrategy.class
+com\antivirus\Antivirus\service\ScanStrategy.class
+com\antivirus\Antivirus\service\SystemObserver.class
+com\antivirus\Antivirus\service\FileMonitor.class
+com\antivirus\Antivirus\util\CircularList.class
+com\antivirus\Antivirus\controller\ScanController.class
+com\antivirus\Antivirus\service\FileChangeListener.class
+com\antivirus\Antivirus\service\YARAScanStrategy.class
