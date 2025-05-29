@@ -1,0 +1,76 @@
+/* === Reset general === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #000000; /* fondo completamente negro */
+  color: #fff;
+}
+
+/* === Barra superior === */
+mat-toolbar {
+  background-color: #ff6f00 !important; /* naranja fuerte */
+  color: #fff;
+  font-weight: bold;
+  padding: 0 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* === Contenedor principal === */
+.container {
+  padding: 24px;
+}
+
+/* === Recuadros del grid === */
+mat-grid-tile {
+  background-color: #1a1a1a !important; /* gris oscuro para contrastar con fondo negro */
+  border: 2px solid #ff9800;            /* naranja medio */
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+mat-grid-tile:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.5);
+}
+
+/* Título dentro del recuadro */
+mat-grid-tile h2 {
+  margin: 0 0 8px 0;
+  color: #ff9800;
+  font-size: 1.6rem;
+}
+
+/* Línea decorativa */
+mat-grid-tile hr {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, #ff6f00, #ff9800);
+  margin: 0 0 10px 0;
+}
+
+/* Descripción debajo del título */
+mat-grid-tile p {
+  color: #ccc;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Ajustes del router outlet para prevenir márgenes innecesarios */
+router-outlet + * {
+  display: block;
+  padding: 16px;
+}
