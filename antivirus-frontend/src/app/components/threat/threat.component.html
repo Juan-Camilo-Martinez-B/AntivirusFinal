@@ -1,0 +1,20 @@
+<div class="threat-container">
+    <h2>🛡️ Amenazas detectadas</h2>
+  
+    <div class="threat-columns">
+      <div class="threat-column">
+        <h3>⚡ Quick Scan</h3>
+        <ul>
+          <li *ngFor="let threat of quickThreats">{{ threat }}</li>
+        </ul>
+      </div>
+  
+      <div class="threat-column">
+        <h3>🔍 Deep Scan</h3>
+        <ul>
+          <li *ngFor="let threat of deepThreats">{{ threat }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
