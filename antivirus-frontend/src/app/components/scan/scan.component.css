@@ -1,0 +1,85 @@
+/* 🎨 Estilos generales */
+.scan-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* 📌 Estilos para tarjetas de escaneo */
+  .scan-option {
+    width: 100%;
+    max-width: 400px;
+    background-color: #1e1e1e;
+    border: 2px solid #ff6d00;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .scan-option:hover {
+    background-color: #252525;
+    box-shadow: 0 4px 12px rgba(255, 109, 0, 0.4);
+  }
+  
+  /* 🎯 Títulos de opciones */
+  .scan-option mat-card-title {
+    color: #ff9800;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  
+  /* 📂 Lista de archivos seleccionados */
+  .file-list {
+    width: 100%;
+    max-width: 500px;
+    background-color: #262626;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+  }
+  
+  .file-list h3 {
+    color: #ff9800;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .file-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .file-list li {
+    padding: 6px;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255, 152, 0, 0.3);
+  }
+  
+  .file-list li:last-child {
+    border-bottom: none;
+  }
+  
+  /* 📌 Botón de escaneo */
+  button {
+    display: block;
+    margin: 15px auto;
+    background-color: #ff6d00;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #e65c00;
+  }
+  
