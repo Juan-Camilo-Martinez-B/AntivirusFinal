@@ -1,4 +1,4 @@
-/* 🎨 Estilos generales */
+/* Estilos generales */
 .scan-container {
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@
     margin: 0 auto;
   }
   
-  /* 📌 Estilos para tarjetas de escaneo */
+  /* Estilos para tarjetas de escaneo */
   .scan-option {
     width: 100%;
     max-width: 400px;
@@ -27,14 +27,14 @@
     box-shadow: 0 4px 12px rgba(255, 109, 0, 0.4);
   }
   
-  /* 🎯 Títulos de opciones */
+  /* Títulos de opciones */
   .scan-option mat-card-title {
     color: #ff9800;
     font-size: 1.3rem;
     font-weight: bold;
   }
   
-  /* 📂 Lista de archivos seleccionados */
+  /* Lista de archivos seleccionados */
   .file-list {
     width: 100%;
     max-width: 500px;
@@ -66,7 +66,7 @@
     border-bottom: none;
   }
   
-  /* 📌 Botón de escaneo */
+  /* Botón de escaneo */
   button {
     display: block;
     margin: 15px auto;
@@ -82,4 +82,25 @@
   button:hover {
     background-color: #e65c00;
   }
+  .detener-scan-button {
+    background-color: #f44336; 
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .detener-scan-button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+  }
+  
+  .detener-scan-button:active {
+    transform: scale(0.98);
+  }
+  
   

@@ -1,50 +1,50 @@
 <div class="scan-container">
-    <h2>🚀 Opciones de escaneo</h2>
-  
-    <mat-card class="scan-option" (click)="startQuickScan()">
-      <mat-card-title>⚡ Quick Scan</mat-card-title>
-      <p>Escanea las áreas clave en busca de amenazas.</p>
-    </mat-card>
-  
-    <mat-card class="scan-option" (click)="startDeepScan()">
-      <mat-card-title>🔍 Deep Scan</mat-card-title>
-      <p>Realiza un análisis profundo en todos los archivos.</p>
-    </mat-card>
-  
-    <mat-card class="scan-option" (click)="selectTargetedFiles()">
-      <mat-card-title>📂 Targeted Scan</mat-card-title>
-      <p>Selecciona archivos específicos para analizar.</p>
-    </mat-card>
-  
-    <div *ngIf="targetedFiles.length > 0" class="file-list">
-      <h3>📂 Archivos seleccionados</h3>
+  <h2>🚀 Opciones de escaneo</h2>
+
+  <mat-card class="scan-option" (click)="startQuickScan()">
+    <mat-card-title>⚡ Quick Scan</mat-card-title>
+    <p>Escanea las áreas clave en busca de amenazas.</p>
+  </mat-card>
+
+  <mat-card class="scan-option" (click)="startDeepScan()">
+    <mat-card-title>🔍 Deep Scan</mat-card-title>
+    <p>Realiza un análisis profundo en todos los archivos.</p>
+  </mat-card>
+
+  <mat-card class="scan-option" (click)="selectTargetedFiles()">
+    <mat-card-title>📂 Targeted Scan</mat-card-title>
+    <p>Selecciona archivos específicos para analizar.</p>
+  </mat-card>
+
+  <div *ngIf="targetedFiles.length > 0" class="file-list">
+    <h3>📂 Archivos seleccionados</h3>
+    <ul>
+      <li *ngFor="let file of targetedFiles">{{ file.name }}</li>
+    </ul>
+    <button mat-button color="primary" (click)="startTargetedScan()">🚀 Iniciar escaneo</button>
+  </div>
+
+  <div *ngIf="scanning" class="scan-status">
+    <h3>🛡️ Escaneo "{{ scanType }}" en progreso...</h3>
+    <p *ngIf="scanType !== 'targeted'">Archivos escaneados: {{ scannedFilesCount }}</p>
+    <button mat-button color="warn" (click)="detenerEscaneo()">⛔ Detener Escaneo</button>
+  </div>
+
+  <div *ngIf="scanCompleted">
+    <h3>✅ Escaneo "{{ scanType }}" finalizado</h3>
+
+    <div *ngIf="scanType === 'targeted'">
+      <h3>📋 Resultados obtenidos del backend</h3>
+      <p><strong>Archivo escaneado:</strong> {{ scanResults?.filePath || 'No disponible' }}</p>
+      <p><strong>Resultado:</strong> {{ scanResults?.result || 'Sin amenazas detectadas' }}</p>
+    </div>
+
+    <div *ngIf="scanType !== 'targeted'">
+      <p>Total de archivos analizados: {{ scannedFilesCount }}</p>
+      <h3>📌 Resultados obtenidos del backend</h3>
       <ul>
-        <li *ngFor="let file of targetedFiles">{{ file.name }}</li>
+        <li *ngFor="let result of scanResults">{{ result }}</li>
       </ul>
-      <button mat-button color="primary" (click)="startTargetedScan()">🚀 Iniciar escaneo</button>
-    </div>
-  
-    <div *ngIf="scanning" class="scan-status">
-      <h3>🛡️ Escaneo "{{ scanType }}" en progreso...</h3>
-      <p *ngIf="scanType !== 'targeted'">Archivos escaneados: {{ scannedFilesCount }}</p>
-    </div>
-  
-    <div *ngIf="scanCompleted">
-      <h3>✅ Escaneo "{{ scanType }}" finalizado</h3>
-  
-      <div *ngIf="scanType === 'targeted'">
-        <h3>📋 Resultados obtenidos del backend</h3> <!-- ✅ Ícono cambiado para diferenciarlo de amenazas -->
-        <p><strong>Archivo escaneado:</strong> {{ scanResults?.filePath || 'No disponible' }}</p>
-        <p><strong>Resultado:</strong> {{ scanResults?.result || 'Sin amenazas detectadas' }}</p> <!-- ✅ Corrección aquí -->
-      </div>
-  
-      <div *ngIf="scanType !== 'targeted'">
-        <p>Total de archivos analizados: {{ scannedFilesCount }}</p>
-        <h3>📌 Resultados obtenidos del backend</h3>
-        <ul>
-          <li *ngFor="let result of scanResults">{{ result }}</li>
-        </ul>
-      </div>
     </div>
   </div>
-  
+</div>

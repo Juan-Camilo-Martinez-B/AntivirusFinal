@@ -2,10 +2,12 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8090/scan';
 
-export const iniciarEscaneo = async (tipo: string) => {
+// Función que inicia el escaneo y acepta opcionalmente una señal para cancelar
+export const iniciarEscaneo = async (tipo: string, signal?: AbortSignal) => {
   try {
-    const response = await axios.get(`${BASE_URL}/scanSystem?scanType=${tipo}`);
-    console.log('🔍 Respuesta completa del backend:', response.data); // ✅ Verifica los datos que llegan
+    const config = signal ? { signal } : {};
+    const response = await axios.get(`${BASE_URL}/scanSystem?scanType=${tipo}`, config);
+    console.log('🔍 Respuesta completa del backend:', response.data);
     return response.data;
   } catch (error) {
     console.error("⚠ Error al iniciar escaneo:", error);

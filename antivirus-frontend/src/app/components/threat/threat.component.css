@@ -1,5 +1,5 @@
 .threat-container {
-    max-width: 800px; /* ✅ Contenedor más ancho para mostrar rutas largas */
+    max-width: 800px; /* Contenedor más ancho para mostrar rutas largas */
     margin: auto;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -17,7 +17,7 @@
     background-color: #1e1e1e;
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    min-width: 300px; /* ✅ Asegura que las columnas tengan suficiente ancho */
+    min-width: 300px; /* Asegura que las columnas tengan suficiente ancho */
   }
   
   h2 {
@@ -39,7 +39,7 @@
     padding: 6px;
     font-size: 14px;
     border-bottom: 1px solid #ddd;
-    overflow-wrap: break-word; /* ✅ Permite que rutas largas se ajusten correctamente */
+    overflow-wrap: break-word; /* Permite que rutas largas se ajusten correctamente */
   }
   
   li:last-child {
@@ -52,4 +52,26 @@
     font-size: 16px;
     padding: 10px;
   }
+  /* CSS para el botón "Detener Monitoreo" */
+.detener-monitoreo-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #f44336; /* Rojo para advertencia */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.detener-monitoreo-button:hover {
+  background-color: #d32f2f;
+}
+
+.detener-monitoreo-button:focus {
+  outline: none;
+}
+
   

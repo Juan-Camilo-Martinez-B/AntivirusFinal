@@ -22,8 +22,8 @@ export class ThreatComponent implements OnInit {
     try {
       const data = await obtenerAmenazas();
       if (data) {
-        this.quickThreats = data.quick || []; // ✅ Almacena amenazas de Quick Scan
-        this.deepThreats = data.deep || []; // ✅ Almacena amenazas de Deep Scan
+        this.quickThreats = data.quick || []; // Almacena amenazas de Quick Scan
+        this.deepThreats = data.deep || []; // Almacena amenazas de Deep Scan
       }
     } catch (error) {
       console.error('⚠ Error al obtener amenazas:', error);

@@ -1,29 +1,33 @@
 <div class="monitor-container">
-    <h2>📡 Monitoreo de cambios en archivos</h2>
-  
-    <mat-card class="monitor-option">
-      <mat-card-title>📂 Seleccionar carpeta/archivo</mat-card-title>
-      <p>Elige la carpeta o archivo que deseas monitorear.</p>
-      <button mat-button color="primary" (click)="seleccionarRuta()">📁 Seleccionar</button>
-      <p *ngIf="rutaSeleccionada"><strong>📌 Monitoreando:</strong> {{ rutaSeleccionada }}</p>
-    </mat-card>
-  
-    <mat-card class="monitor-option" *ngIf="rutaSeleccionada">
-      <mat-card-title>🚀 Iniciar monitoreo</mat-card-title>
-      <button mat-button color="accent" (click)="iniciarMonitoreo()">🛡️ Iniciar</button>
-      <p *ngIf="mensaje">{{ mensaje }}</p>
-    </mat-card>
-  
-    <div *ngIf="cambios.length > 0">
-      <h3>📋 Cambios detectados en los últimos 20 segundos</h3>
-      <ul>
-        <li *ngFor="let cambio of cambios">{{ cambio }}</li>
-      </ul>
-    </div>
-  
-    <div *ngIf="cambios.length === 0 && mensaje.includes('Monitoreo iniciado')">
-      <h3>✅ No se han detectado cambios recientes</h3>
-      <p>Los archivos monitoreados no han tenido modificaciones en los últimos 20 segundos.</p>
-    </div>
+  <h2>📡 Monitoreo de cambios en archivos</h2>
+
+  <!-- Selección de carpeta/archivo -->
+  <mat-card class="monitor-option">
+    <mat-card-title>📂 Seleccionar carpeta/archivo</mat-card-title>
+    <p>Elige la carpeta o archivo que deseas monitorear.</p>
+    <button mat-button color="primary" (click)="seleccionarRuta()">📁 Seleccionar</button>
+    <p *ngIf="rutaSeleccionada"><strong>📌 Monitoreando:</strong> {{ rutaSeleccionada }}</p>
+  </mat-card>
+
+  <!-- Controles de monitoreo -->
+  <mat-card class="monitor-option" *ngIf="rutaSeleccionada">
+    <mat-card-title>🚀 Iniciar/Detener monitoreo</mat-card-title>
+    <button mat-button color="accent" (click)="iniciarMonitoreo()">🛡️ Iniciar</button>
+    <button mat-button color="warn" (click)="detenerMonitoreo()">⛔ Detener Monitoreo</button>
+    <p *ngIf="mensaje">{{ mensaje }}</p>
+  </mat-card>
+
+  <!-- Mostrar cambios detectados -->
+  <div *ngIf="cambios.length > 0">
+    <h3>📋 Cambios detectados en los últimos 20 segundos</h3>
+    <ul>
+      <li *ngFor="let cambio of cambios">{{ cambio }}</li>
+    </ul>
   </div>
-  
+
+  <!-- Mensaje cuando no hay cambios -->
+  <div *ngIf="cambios.length === 0 && mensaje.includes('Monitoreo iniciado')">
+    <h3>✅ No se han detectado cambios recientes</h3>
+    <p>Los archivos monitoreados no han tenido modificaciones en los últimos 20 segundos.</p>
+  </div>
+</div>
