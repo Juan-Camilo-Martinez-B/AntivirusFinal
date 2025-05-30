@@ -7,6 +7,14 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8090/scan';
 
+// Definición de la interfaz según lo que retorna el backend
+interface ScannedFile {
+  filePath: string;
+  scanTime: string; // O Date, según lo que retorne tu backend
+  result: string;
+  category: string;
+}
+
 @Component({
   selector: 'app-scan',
   standalone: true,
@@ -20,10 +28,11 @@ export class ScanComponent {
   scanType: string = '';
   scanning = false;       // Bandera para indicar que hay un escaneo en curso
   scanCompleted = false;
-  // Aquí se mostrará el conteo en tiempo real obtenido del backend
   scannedFilesCount: number | null = null;
   detectedThreats: string[] = [];
   scanResults: any = {}; 
+  // Nueva propiedad para los archivos "limpios"
+  cleanFiles: ScannedFile[] = [];
 
   // Referencia al intervalo usado para el sondeo (polling)
   private pollInterval: any;
@@ -32,11 +41,9 @@ export class ScanComponent {
 
   // Método para iniciar el sondeo que consulta el endpoint /currentCount
   private startPolling(): void {
-    // Actualiza el conteo cada 2 segundos
     this.pollInterval = setInterval(() => {
       axios.get(`${BASE_URL}/currentCount`)
         .then(response => {
-          // Se actualiza el valor en tiempo real
           this.scannedFilesCount = response.data;
           this.cdr.detectChanges();
         })
@@ -53,19 +60,16 @@ export class ScanComponent {
     }
   }
 
-  // Inicia el escaneo rápido si no hay otro en curso
   async startQuickScan() {
     if (this.scanning) return;
     await this.startScan('quick');
   }
 
-  // Inicia el escaneo profundo si no hay otro en curso
   async startDeepScan() {
     if (this.scanning) return;
     await this.startScan('deep');
   }
 
-  // Escaneo dirigido: se evita iniciarlo si ya hay un escaneo activo
   async startTargetedScan() {
     if (this.scanning) {
       alert("Ya existe un escaneo en curso. Detén el escaneo actual antes de iniciar uno nuevo.");
@@ -87,7 +91,6 @@ export class ScanComponent {
 
       if (response.data) {
         this.scanType = 'targeted';
-        // Empaquetar la respuesta para la UI
         this.scanResults = { filePath, result: response.data };
         this.detectedThreats = response.data.includes("🚨") ? ["Amenaza detectada"] : [];
         this.cdr.detectChanges();
@@ -100,7 +103,6 @@ export class ScanComponent {
     this.scanCompleted = true;
   }
 
-  // Método general para iniciar escaneo automático (Quick o Deep)
   async startScan(type: string) {
     if (this.scanning) {
       alert("Ya existe un escaneo en curso. Detén el escaneo actual antes de iniciar uno nuevo.");
@@ -111,44 +113,40 @@ export class ScanComponent {
     this.scanCompleted = false;
     this.detectedThreats = [];
     this.scanResults = {};
-    // Reinicia el contador para el sondeo en tiempo real
+    // Inicializamos el contador, se actualizará mediante el polling
     this.scannedFilesCount = 0;
 
-    // Arranca el polling para actualizar el conteo en tiempo real
     this.startPolling();
 
     console.log(`🛡️ Escaneo "${this.scanType}" iniciado...`);
 
     try {
-      // Inicia el escaneo llamando al servicio
       const response = await iniciarEscaneo(type);
       console.log("📌 Respuesta del backend recibida:", response);
 
       if (response) {
         if (type !== 'targeted') {
-          this.scannedFilesCount = response.totalFilesScanned || 0;
+          // No sobrescribir el contador, se actualiza via polling.
+          // this.scannedFilesCount = response.totalFilesScanned || 0;
           this.scanResults = response.scanResults || {};
           this.detectedThreats = response.detectedThreats || [];
           console.log("📌 Resultados obtenidos del backend:", this.scanResults);
         } else {
           this.scanResults = response;
           this.detectedThreats = response.includes("🚨") ? ["Amenaza detectada"] : [];
-          this.cdr.detectChanges(); // Forzar actualización de la UI
+          this.cdr.detectChanges();
         }
       }
     } catch (error: any) {
       console.error("⚠ Error durante el escaneo:", error);
     } finally {
-      // Detiene el polling cuando finaliza el escaneo
       this.stopPolling();
       this.scanning = false;
       this.scanCompleted = true;
     }
   }
 
-  // Método público para detener el escaneo en curso (Quick o Deep)
   public detenerEscaneo(): void {
-    // Se invoca el endpoint de cancelación en el backend
     axios.post(`${BASE_URL}/stopScan`)
       .then(response => {
         console.log("🛑 Detención solicitada en backend:", response.data);
@@ -156,14 +154,11 @@ export class ScanComponent {
       .catch(error => {
         console.error("⚠ Error al detener el escaneo:", error);
       });
-    // Se detiene el polling en caso de que siga activo
     this.stopPolling();
-    // Actualiza el estado de la UI, suponiendo que el backend detendrá el proceso
     this.scanning = false;
     this.scanCompleted = true;
   }
 
-  // Método para seleccionar un archivo para el escaneo dirigido
   selectTargetedFiles() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -179,5 +174,20 @@ export class ScanComponent {
     });
 
     input.click();
+  }
+
+  // Método para cargar los archivos del BST con la categoría "Sin amenazas conocidas"
+  async loadCleanFiles() {
+    try {
+      const response = await axios.get(`${BASE_URL}/scannedFiles`);
+      if (Array.isArray(response.data)) {
+        // Filtra los archivos que tengan la categoría "Sin amenazas conocidas"
+        this.cleanFiles = response.data.filter((file: ScannedFile) => file.category === "Sin amenazas conocidas");
+        console.log("Archivos limpios:", this.cleanFiles);
+        this.cdr.detectChanges();
+      }
+    } catch (error) {
+      console.error("⚠ Error al obtener archivos limpios:", error);
+    }
   }
 }

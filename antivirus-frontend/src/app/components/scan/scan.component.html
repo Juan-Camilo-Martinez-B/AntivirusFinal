@@ -16,10 +16,10 @@
     <p>Selecciona archivos específicos para analizar.</p>
   </mat-card>
 
-  <div *ngIf="targetedFiles.length > 0" class="file-list">
+  <div *ngIf="(targetedFiles || []).length > 0" class="file-list">
     <h3>📂 Archivos seleccionados</h3>
     <ul>
-      <li *ngFor="let file of targetedFiles">{{ file.name }}</li>
+      <li *ngFor="let file of (targetedFiles || [])">{{ file.name }}</li>
     </ul>
     <button mat-button color="primary" (click)="startTargetedScan()">🚀 Iniciar escaneo</button>
   </div>
@@ -35,16 +35,45 @@
 
     <div *ngIf="scanType === 'targeted'">
       <h3>📋 Resultados obtenidos del backend</h3>
-      <p><strong>Archivo escaneado:</strong> {{ scanResults?.filePath || 'No disponible' }}</p>
-      <p><strong>Resultado:</strong> {{ scanResults?.result || 'Sin amenazas detectadas' }}</p>
+      <p>
+        <strong>Archivo escaneado:</strong>
+        {{ scanResults?.filePath || 'No disponible' }}
+      </p>
+      <p>
+        <strong>Resultado:</strong>
+        {{ scanResults?.result || 'Sin amenazas detectadas' }}
+      </p>
     </div>
 
     <div *ngIf="scanType !== 'targeted'">
       <p>Total de archivos analizados: {{ scannedFilesCount }}</p>
       <h3>📌 Resultados obtenidos del backend</h3>
       <ul>
-        <li *ngFor="let result of scanResults">{{ result }}</li>
+        <!-- Se utiliza la pipe keyvalue para iterar sobre scanResults cuando se recibe un objeto -->
+        <li *ngFor="let item of scanResults | keyvalue">
+          <strong>{{ item.key }}:</strong> {{ item.value }}
+        </li>
       </ul>
+    </div>
+
+    <!-- Sección para Archivos limpios -->
+    <div class="clean-files-section">
+      <button mat-button color="accent" (click)="loadCleanFiles()">Archivos limpios</button>
+
+      <div *ngIf="(cleanFiles || []).length > 0; else noCleanFiles">
+        <h3>Archivos sin amenazas conocidas</h3>
+        <ul>
+          <li *ngFor="let file of (cleanFiles || [])">
+            <p><strong>Ruta:</strong> {{ file?.filePath }}</p>
+            <p><strong>Fecha:</strong> {{ file?.scanTime }}</p>
+            <p><strong>Resultado:</strong> {{ file?.result }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <ng-template #noCleanFiles>
+        <p>No se encontraron archivos sin amenazas conocidas.</p>
+      </ng-template>
     </div>
   </div>
 </div>
